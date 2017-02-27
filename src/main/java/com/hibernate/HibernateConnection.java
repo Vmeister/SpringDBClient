@@ -1,0 +1,291 @@
+package com.hibernate;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import com.model.Person;
+import com.model.User;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+/**
+ *
+ * @author Ville
+ */
+@Repository
+public class HibernateConnection {
+    @Autowired
+    private static SessionFactory factory;
+    User loggedUser;
+    
+    
+    /**
+     * Initialises database connection
+     * @return boolean based on the succesfulness of connection
+     */
+    public boolean initializeConnection() {
+        try{
+            factory = new Configuration().configure().buildSessionFactory();
+        }catch (Throwable ex) { 
+            System.err.println("Failed to create sessionFactory object." + ex);
+            throw new ExceptionInInitializerError(ex); 
+        }
+        return true;
+    }
+    
+      /**
+     * Adds a new Person object to database
+     * @param person a new person
+     * @return ID of the added person
+     */
+    public Integer addPerson(Person person) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer personID = null;
+        try{
+            tx = session.beginTransaction();
+            personID = (Integer) session.save(person); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+        return personID;
+   }
+    
+     /**
+     * Creates an ArrayList of all the persons in database
+     * @return an ArrayList of persons
+     */
+    public ArrayList listPersons( ) {
+        ArrayList<Person> persons = new ArrayList<>();
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            List employees = session.createQuery("FROM Person").list(); 
+            for (Iterator iterator = 
+                employees.iterator(); iterator.hasNext();){
+                    Person person = (Person) iterator.next(); 
+                    if(!persons.contains(person))
+                        persons.add(person);
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+        return persons;
+    }
+    
+    /**
+     * Updates the data of a single person
+     * @param person the person whose data is to be updated
+     */
+    public void updatePerson(Person person){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            //Person person2 = (Person)session.get(Person.class, person.getId());
+            session.update(person); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+      }
+   }
+    
+        /**
+     * Deletes a person's data from database
+     * @param person person to be deleted
+     */
+    public void deletePerson(Person person){
+        Session session = null;
+        if(factory.getCurrentSession().isOpen())
+            factory.getCurrentSession().close();
+        session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.delete(person); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+    }
+    
+    /**
+     * Adds a new user account to databse
+     * @param user new user account
+     * @return user ID
+     */
+    public Integer addUser(User user) {
+        Session session = null;
+        if(factory.getCurrentSession().isOpen())
+            factory.getCurrentSession().close();
+        session = factory.openSession();
+        Transaction tx = null;
+        Integer userID = null;
+        try{
+            tx = session.beginTransaction();
+            userID = (Integer) session.save(user); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+        return userID;
+    }
+    
+    /**
+     * Lists all the user accounts in the database
+     * @return an ArrayList of user accounts
+     */
+    public ArrayList listUsers( ) {
+        ArrayList<User> users = new ArrayList<>();
+        Session session = null;
+        if(!factory.getCurrentSession().isOpen())
+            session = factory.getCurrentSession();
+        else session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            List users2 = session.createQuery("FROM User").list(); 
+            for (Iterator iterator = 
+                            users2.iterator(); iterator.hasNext();){
+                User user = (User) iterator.next(); 
+                users.add(user);
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+        return users;
+    }
+
+    /**
+     * Updates an user account's login information
+     * @param user user account to be updated
+     */
+    public void updateUser(User user){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.update(user); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+    }
+
+    /**
+     * Deletes an user account from database
+     * @param user user account to be deleted
+     */
+    public void deleteUser(User user){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.delete(user); 
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+        }
+    }
+    
+     /**
+     * Log in procedure for a database connection
+     * @param username username
+     * @param password password
+     * @return user account during successful login, null if fails
+     */
+    public User login(String username, String password) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        User user = null;
+        try{
+            tx = session.beginTransaction();
+            List users = session.createQuery("FROM User").list(); 
+            for (Iterator iterator = 
+                users.iterator(); iterator.hasNext();){
+                    User user2 = (User) iterator.next(); 
+                    if(user2.getUsername().equals(username) && user2.getPassword().equals(password))
+                        user = user2;
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+      }
+        loggedUser = user;
+        return user;
+    }
+    
+    /**
+     * Returns the logged user account
+     * @return logged user
+     */
+    public User loggedUser() {
+        return loggedUser;
+        
+    }
+    
+    public User findByUserName(String username) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+        User user = null;
+        try {
+            tx = session.beginTransaction();
+            List users = session.createQuery("FROM User").list(); 
+            for (Iterator iterator = 
+                users.iterator(); iterator.hasNext();){
+                    User user2 = (User) iterator.next(); 
+                    if(user2.getUsername().equals(username))
+                        user = user2;
+            }
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace(); 
+        }finally {
+            session.close(); 
+      }
+        user = user;
+        return user;
+    }
+
+    public void closeConnection() {
+        factory.getCurrentSession().close();
+        factory.close();
+    }
+}
