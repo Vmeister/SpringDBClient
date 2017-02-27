@@ -1,3 +1,11 @@
-D:\Koodit\SpringDBClient\src\main\java\com\springdbclient\DBClientApp.java
-D:\Koodit\SpringDBClient\src\main\java\com\springdbclient\WebSecurityConfig.java
-D:\Koodit\SpringDBClient\src\main\java\com\springdbclient\MVCConfig.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\model\Person.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\springdbclient\config\SpringSecurityInitializer.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\model\User.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\springdbclient\config\MVCConfig.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\controllers\MainController.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\springdbclient\config\SecurityConfig.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\springdbclient\DBClientApp.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\hibernate\HibernateConnection.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\users\MyUserDetailsService.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\model\UserRole.java
+C:\Users\Ville\Documents\GitHub\SpringDBClient\SpringDBClient\src\main\java\com\springdbclient\config\AppConfig.java

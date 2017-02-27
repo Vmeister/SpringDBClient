@@ -9,7 +9,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,28 +22,13 @@ public class HibernateConnection {
     private static SessionFactory factory;
     User loggedUser;
     
-    
-    /**
-     * Initialises database connection
-     * @return boolean based on the succesfulness of connection
-     */
-    public boolean initializeConnection() {
-        try{
-            factory = new Configuration().configure().buildSessionFactory();
-        }catch (Throwable ex) { 
-            System.err.println("Failed to create sessionFactory object." + ex);
-            throw new ExceptionInInitializerError(ex); 
-        }
-        return true;
-    }
-    
       /**
      * Adds a new Person object to database
      * @param person a new person
      * @return ID of the added person
      */
     public Integer addPerson(Person person) {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         Integer personID = null;
         try{
@@ -54,8 +38,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
         return personID;
    }
@@ -66,7 +48,7 @@ public class HibernateConnection {
      */
     public ArrayList listPersons( ) {
         ArrayList<Person> persons = new ArrayList<>();
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -81,8 +63,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
         return persons;
     }
@@ -92,7 +72,7 @@ public class HibernateConnection {
      * @param person the person whose data is to be updated
      */
     public void updatePerson(Person person){
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -102,9 +82,7 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
-      }
+        }
    }
     
         /**
@@ -112,10 +90,7 @@ public class HibernateConnection {
      * @param person person to be deleted
      */
     public void deletePerson(Person person){
-        Session session = null;
-        if(factory.getCurrentSession().isOpen())
-            factory.getCurrentSession().close();
-        session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -124,8 +99,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
     }
     
@@ -135,10 +108,7 @@ public class HibernateConnection {
      * @return user ID
      */
     public Integer addUser(User user) {
-        Session session = null;
-        if(factory.getCurrentSession().isOpen())
-            factory.getCurrentSession().close();
-        session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         Integer userID = null;
         try{
@@ -148,8 +118,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
         return userID;
     }
@@ -160,10 +128,7 @@ public class HibernateConnection {
      */
     public ArrayList listUsers( ) {
         ArrayList<User> users = new ArrayList<>();
-        Session session = null;
-        if(!factory.getCurrentSession().isOpen())
-            session = factory.getCurrentSession();
-        else session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -177,8 +142,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
         return users;
     }
@@ -188,7 +151,7 @@ public class HibernateConnection {
      * @param user user account to be updated
      */
     public void updateUser(User user){
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -197,8 +160,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
     }
 
@@ -207,7 +168,7 @@ public class HibernateConnection {
      * @param user user account to be deleted
      */
     public void deleteUser(User user){
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -216,8 +177,6 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
         }
     }
     
@@ -228,7 +187,7 @@ public class HibernateConnection {
      * @return user account during successful login, null if fails
      */
     public User login(String username, String password) {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         User user = null;
         try{
@@ -244,9 +203,7 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
-      }
+        }
         loggedUser = user;
         return user;
     }
@@ -261,7 +218,7 @@ public class HibernateConnection {
     }
     
     public User findByUserName(String username) {
-        Session session = factory.openSession();
+        Session session = factory.getCurrentSession();
         Transaction tx = null;
         User user = null;
         try {
@@ -277,9 +234,7 @@ public class HibernateConnection {
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
             e.printStackTrace(); 
-        }finally {
-            session.close(); 
-      }
+        }
         user = user;
         return user;
     }

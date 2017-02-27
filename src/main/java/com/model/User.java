@@ -5,14 +5,30 @@
  */
 package com.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 /**
  *
  * @author Ville
  */
+@Entity
+@Table(name="User")
 public class User {
+    
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
+    
     private String username;
     private String password;
-    private UserRole userrole;
+    private String userrole;
     
     public User() {
         
@@ -39,11 +55,15 @@ public class User {
         this.password = password;
     }
     
-    public UserRole getUserRole() {
+    public String getUserRole() {
         return userrole;
     }
     
-    public void setUserRole(UserRole userrole) {
+    public void setUserRole(String userrole) {
         this.userrole = userrole;
+    }
+    
+    public String toString() {
+        return this.username +":" + this.password;
     }
 }

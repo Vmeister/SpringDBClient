@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import com.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,7 +35,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
             com.model.User user = connection.findByUserName(username);
-            List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
+            List<GrantedAuthority> authorities = buildUserAuthority(user);
 	    return buildUserForAuthentication(user, authorities);
     }
 
@@ -44,9 +43,9 @@ public class MyUserDetailsService implements UserDetailsService {
         return new User(user.getUsername(), user.getPassword(), true, true, true, true, authorities);
 	}
 
-    private List<GrantedAuthority> buildUserAuthority(UserRole userRole) {
+    private List<GrantedAuthority> buildUserAuthority(com.model.User user) {
         Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-        setAuths.add(new SimpleGrantedAuthority(userRole.getUserRole()));
+        setAuths.add(new SimpleGrantedAuthority(user.getUserRole()));
         List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
         
         return Result;
