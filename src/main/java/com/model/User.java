@@ -36,15 +36,17 @@ public class User implements Serializable {
     private String userrole;
     
     @Column
-    private int activated;
+    private boolean activated;
     
     public User() {
         
     }
     
-    public User(String username, String password) {
+    public User(String username, String password, String userrole, boolean activated) {
         this.username = username;
         this.password = password;
+        this.userrole = userrole;
+        this.activated = activated;
     }
     
     public Integer getId() {
@@ -79,11 +81,11 @@ public class User implements Serializable {
         this.userrole = userrole;
     }
 
-    public int getActivated() {
+    public boolean getActivated() {
         return activated;
     }
 
-    public void setActivated(int activated) {
+    public void setActivated(boolean activated) {
         this.activated = activated;
     }
     

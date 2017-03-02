@@ -1,11 +1,9 @@
 com\DBClientApp.class
-com\model\Person.class
-com\services\UserServiceImpl.class
 com\repositories\UserRepository.class
 com\config\SpringSecurityInitializer.class
 com\controllers\LoginController.class
-com\repositories\PersonRepository.class
 com\services\UserService.class
+com\config\DataSourceConfig.class
 com\controllers\MainController.class
 com\model\User.class
 com\config\MVCConfig.class

@@ -5,7 +5,7 @@
  */
 package com.controllers;
 
-import com.services.UserService;
+import com.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
     
     @Autowired
-    private UserService userService;
-
+    private UserRepository userRepository;
+    
 	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		ModelAndView modelAndView = new ModelAndView();

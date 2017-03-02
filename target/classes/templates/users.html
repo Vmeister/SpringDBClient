@@ -28,10 +28,12 @@
             <td th:text="${item.userrole}"/>
             <td th:text="${item.activated}"/>
             <td>
-                <a th:href="@{/user/id=(${item.id})}">Edit user</a>
+                <a th:href="@{'/user/id=' + ${item.id}}">Edit user</a>
             </td>
           </tr>
         </tbody>
+        
+        <a th:href="@{/user/id=newuser}">New user</a>
 </table>
 </body>
 </html> 
