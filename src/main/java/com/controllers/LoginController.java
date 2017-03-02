@@ -5,28 +5,27 @@
  */
 package com.controllers;
 
-import com.model.Person;
-import com.model.User;
-import com.repositories.UserRepository;
 import com.services.UserService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+/**
+ *
+ * @author Ville
+ */
 @Controller
-public class MainController {
+public class LoginController {
     
     @Autowired
-    UserService userService;
-    
-        
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String users(Model model) {
-        List<User> users = this.userService.findAll();
-        model.addAttribute("userList", users);
-        return "users";
-    }
+    private UserService userService;
+
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
+	public ModelAndView login(){
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("login");
+		return modelAndView;
+	}
 }

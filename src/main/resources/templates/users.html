@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users</title>
+</head>
+<body>
+<h1>
+    Users
+</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Activated</th>
+                <th>Edit</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+          <tr th:each="item:${userList}">
+            <td th:text="${item.id}"/>
+            <td th:text="${item.username}"/>
+            <td th:text="${item.password}"/>
+            <td th:text="${item.userrole}"/>
+            <td th:text="${item.activated}"/>
+            <td>
+                <a th:href="@{/user/id=(${item.id})}">Edit user</a>
+            </td>
+          </tr>
+        </tbody>
+</table>
+</body>
+</html> 

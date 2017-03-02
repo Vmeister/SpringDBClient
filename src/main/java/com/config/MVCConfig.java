@@ -1,6 +1,8 @@
-package com.springdbclient.config;
+package com.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -15,6 +17,12 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/dbclient").setViewName("dbclient");
         registry.addViewController("/persons").setViewName("persons");
         registry.addViewController("/users").setViewName("users");
+    }
+    
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
     }
 
 }

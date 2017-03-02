@@ -6,6 +6,8 @@
     </head>
     <body>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <p>Persons table <a th:href="@{/persons}"></a></p>
+        <p>Users table <a th:href="@{/users}"></a></p>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
