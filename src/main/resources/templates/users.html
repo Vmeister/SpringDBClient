@@ -17,6 +17,7 @@
                 <th>Role</th>
                 <th>Activated</th>
                 <th>Edit</th>
+                <th>Remove</th>
             </tr>
             
         </thead>
@@ -29,6 +30,11 @@
             <td th:text="${item.activated}"/>
             <td>
                 <a th:href="@{'/user/id=' + ${item.id}}">Edit user</a>
+            </td>
+            <td>
+                <form action="/userRemoved" th:action="@{'/removeUser/id=' + ${item.id}}" method="post">
+                    <button type="submit" name="Remove user" value="Remove user">Remove user</button>
+                </form>
             </td>
           </tr>
         </tbody>

@@ -17,6 +17,7 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/dbclient").setViewName("dbclient");
         registry.addViewController("/users").setViewName("users");
         registry.addViewController("/saveUser").setViewName("saveUser");
+        registry.addViewController("/userRemoved").setViewName("userRemoved");
     }
 
 }

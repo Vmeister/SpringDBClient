@@ -17,7 +17,7 @@ public class DBClientApp {
 	SpringApplication.run(DBClientApp.class, args);
     }
     
-    @Bean
+    /**@Bean
     public boolean initDatabase() {
         User user = new User("admin", "password", "ADMIN", true);
         User user2 = new User("user", "password", "USER", true);
@@ -26,5 +26,5 @@ public class DBClientApp {
         userRepository.saveAndFlush(user);
         userRepository.saveAndFlush(user2);
         return true;
-    }
+    }*/
 }

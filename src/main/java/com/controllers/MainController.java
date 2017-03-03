@@ -51,7 +51,7 @@ public class MainController {
     }
     
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    void saveUser(@ModelAttribute(value="úserById") User user) {
+    void saveUser(@ModelAttribute(value="userById") User user) {
         this.userRepository.saveAndFlush(user);
     }
     
@@ -59,4 +59,18 @@ public class MainController {
     ModelAndView saveUserView() {
         return new ModelAndView("saveUser");
     }
+    
+    @RequestMapping(value = "/removeUser/id={id}", method = RequestMethod.POST)
+    String removeUser(@PathVariable(value="id") String id) {
+        Integer id2 = Integer.parseInt(id);
+        User user = this.userRepository.findById(id2);
+        this.userRepository.delete(user);
+        return "userRemoved";
+    }
+    
+    @RequestMapping(value = "/removeUser/id={id}", method = RequestMethod.GET)
+    ModelAndView removeUserView() {
+        return new ModelAndView("userRemoved");
+    }
+    
 }
