@@ -64,9 +64,8 @@ public class EmployeeController {
     }
     
     @RequestMapping(value = "/removeEmployee/id={id}", method = RequestMethod.POST)
-    String removeUser(@PathVariable(value="id") String id) {
-        Integer id2 = Integer.parseInt(id);
-        Employee employee = this.employeeRepository.findById(id2);
+    String removeUser(@PathVariable(value="id") String id) {;
+        Employee employee = this.employeeRepository.findById(Integer.parseInt(id));
         this.employeeRepository.delete(employee);
         return "employeeRemoved";
     }

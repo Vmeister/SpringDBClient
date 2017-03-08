@@ -64,8 +64,7 @@ public class UserController {
     
     @RequestMapping(value = "/removeUser/id={id}", method = RequestMethod.POST)
     String removeUser(@PathVariable(value="id") String id) {
-        Integer id2 = Integer.parseInt(id);
-        User user = this.userRepository.findById(id2);
+        User user = this.userRepository.findById(Integer.parseInt(id));
         this.userRepository.delete(user);
         return "userRemoved";
     }
