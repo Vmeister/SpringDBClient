@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employees</title>
+</head>
+<body>
+<h1>
+    Employees
+</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Address</th>
+                <th>Phone number</th>
+                <th>email</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+          <tr th:each="item:${employeeList}">
+            <td th:text="${item.id}"/>
+            <td th:text="${item.firstname}"/>
+            <td th:text="${item.lastname}"/>
+            <td th:text="${item.address}"/>
+            <td th:text="${item.phonenumber}"/>
+            <td th:text="${item.email}"/>
+            <td>
+                <a th:href="@{'/employee/id=' + ${item.id}}">Edit employee</a>
+            </td>
+            <td>
+                <form action="/employeeRemoved" th:action="@{'/removeEmployee/id=' + ${item.id}}" method="post">
+                    <button type="submit" name="Remove employee" value="Remove employee">Remove employee</button>
+                </form>
+            </td>
+          </tr>
+        </tbody>
+        
+        <a th:href="@{/employee/id=newemployee}">New employee</a>
+</table>
+</body>
+</html> 

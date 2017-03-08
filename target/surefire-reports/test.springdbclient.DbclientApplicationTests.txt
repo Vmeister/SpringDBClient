@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: test.springdbclient.DbclientApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.021 sec <<< FAILURE! - in test.springdbclient.DbclientApplicationTests
-initializationError(test.springdbclient.DbclientApplicationTests)  Time elapsed: 0.008 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.04 sec <<< FAILURE! - in test.springdbclient.DbclientApplicationTests
+initializationError(test.springdbclient.DbclientApplicationTests)  Time elapsed: 0.009 sec  <<< ERROR!
 java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
 	at org.springframework.util.Assert.state(Assert.java:392)
 	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.getOrFindConfigurationClasses(SpringBootTestContextBootstrapper.java:173)

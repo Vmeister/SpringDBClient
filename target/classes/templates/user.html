@@ -8,6 +8,7 @@
     User information
 </h1>
     <form action="#" th:action="@{/saveUser}" th:object="${userById}" method="post">
+        <div><input type="hidden" name="id" th:value="${userById.id}"/></div>
         <div><label>Username: <input type="text" name="username" th:value="${userById.username}"/></label></div>
         <div><label>Password: <input type="text" name="password" th:value="${userById.password}"/></label></div>
         <div><label>User role: <input type="text" name="userrole" th:value="${userById.userrole}"/></label></div>
